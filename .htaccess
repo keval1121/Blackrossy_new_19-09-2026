@@ -6,6 +6,10 @@
 
     RewriteEngine On
 
+    # One canonical host: https://blackrossy.com (no www).
+    RewriteCond %{HTTP_HOST} ^www\.blackrossy\.com$ [NC]
+    RewriteRule ^ https://blackrossy.com%{REQUEST_URI} [L,R=301]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

@@ -37,6 +37,32 @@
         font-size: 1rem;
         line-height: 1.8;
     }
+    .br-about-text + .br-about-text { margin-top: 1rem; }
+    .br-about-list {
+        margin: 1.25rem auto 0;
+        max-width: 40rem;
+        padding: 0;
+        list-style: none;
+        text-align: left;
+        color: #57534e;
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+    .br-about-list li {
+        position: relative;
+        padding-left: 1.15rem;
+        margin-top: .55rem;
+    }
+    .br-about-list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: .7em;
+        width: .4rem;
+        height: .4rem;
+        border-radius: 999px;
+        background: #a8a29e;
+    }
     .br-about-values {
         margin-top: 1.75rem;
         display: grid;
@@ -100,7 +126,7 @@
     <div class="br-about-wrap">
         <h1 class="br-about-title">About Us</h1>
         <p class="br-about-lead">
-            {{ store_name() }} is an India-based online boutique for {{ storefront_collection_names() }} — with guest checkout and Cash on Delivery.
+            {{ store_name() }} is an India-based online boutique for {{ storefront_collection_names() }} — with guest checkout and Cash on Delivery on eligible pin codes.
         </p>
 
         <section class="br-about-block">
@@ -108,6 +134,21 @@
             <p class="br-about-text">
                 Black Rossy started with a simple idea: make everyday and festive shopping easier for customers who want clear photos, honest product details and a checkout that does not force an account. We focus on {{ storefront_collection_names() }} pieces that feel useful for real Indian occasions — office days, family gatherings and festivals.
             </p>
+            <p class="br-about-text">
+                Too many online listings show only a price and a stock image. Our product pages aim to explain who an item is for, when to wear it, and how to care for it, so you can decide with confidence from your phone before you place a Cash on Delivery order.
+            </p>
+        </section>
+
+        <section class="br-about-block">
+            <h2 class="br-about-heading">What we sell</h2>
+            <p class="br-about-text">
+                Live collections centre on clothing, footwear and bags under {{ storefront_collection_names() }}. Category pages include buying guidance — not only a product grid — so you can learn how to choose before you filter by price. Empty lines stay off the public menu until they have products you can actually buy.
+            </p>
+            <ul class="br-about-list">
+                <li>Clothing for workdays, weekends and festive plans</li>
+                <li>Footwear chosen for everyday comfort and casual outings</li>
+                <li>Handbags and clutches for daily carry and occasion looks</li>
+            </ul>
         </section>
 
         <section class="br-about-block">
@@ -138,7 +179,10 @@
         <section class="br-about-block">
             <h2 class="br-about-heading">How shopping works</h2>
             <p class="br-about-text">
-                Choose from {{ storefront_collection_names(' or ') }}, add items to your cart, and checkout with your name, mobile number and delivery address. Most orders are packed in 1–2 working days and delivered in about 2–5 days depending on your pin code.
+                Choose from {{ storefront_collection_names(' or ') }}, add items to your cart, and checkout with your name, mobile number and delivery address. Most orders are packed in 1–2 working days and delivered in about 2–5 days depending on your pin code. Shipping is free on every order.
+            </p>
+            <p class="br-about-text">
+                Eligible unused returns follow a 7-day window when tags and packaging are intact. Full rules live on our Shipping, Return and Refund policy pages. For help after checkout, share your order number on Contact or WhatsApp.
             </p>
         </section>
 

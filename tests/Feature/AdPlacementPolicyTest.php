@@ -99,12 +99,13 @@ class AdPlacementPolicyTest extends TestCase
             'data-ad-slot="category_top"',
             'Linen Shirt',
             'data-ad-slot="listing_middle"',
+            'About Rossy Apparel',
+            'Everyday clothing picked for Indian weather.',
         ], false);
         $productLink = 'href="'.url('/product/linen-shirt-');
         $html = $page->getContent();
         $linksPerCard = substr_count($html, $productLink) / 9;
         $this->assertSame(6 * $linksPerCard, substr_count(strstr($html, 'data-ad-slot="listing_middle"', true), $productLink));
-        $page->assertDontSee('Everyday clothing picked for Indian weather.');
         $page->assertDontSee('9 items');
 
         $ajax = $this->getJson($this->category->url(), ['X-Requested-With' => 'XMLHttpRequest']);

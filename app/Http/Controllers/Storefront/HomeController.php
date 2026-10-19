@@ -23,7 +23,8 @@ class HomeController extends Controller
         $featuredParents = Category::query()
             ->active()
             ->parents()
-            ->with(['children' => fn ($query) => $query->active()->with('parent')->orderBy('display_order')])
+            ->withCatalogProducts()
+            ->with(['children' => fn ($query) => $query->active()->withCatalogProducts()->with('parent')->orderBy('display_order')])
             ->when($featuredCategoryIds, fn ($query) => $query->whereIn('id', $featuredCategoryIds),
                 fn ($query) => $query->where('show_on_homepage', true))
             ->orderBy('display_order')

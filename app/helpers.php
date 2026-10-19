@@ -172,6 +172,7 @@ if (! function_exists('storefront_collections')) {
             return collect(Cache::remember('shop.collections', 600, fn () => Category::query()
                 ->active()
                 ->parents()
+                ->withCatalogProducts()
                 ->orderBy('display_order')
                 ->get(['name', 'slug'])
                 ->map(fn (Category $category) => ['name' => $category->name, 'slug' => $category->slug])

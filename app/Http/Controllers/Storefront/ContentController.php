@@ -74,6 +74,10 @@ class ContentController extends Controller
                         'answer' => 'Black Rossy uses Cash on Delivery for eligible Indian pin codes. Pay the courier only after your parcel reaches you. No card, UPI or wallet payment is needed at checkout.',
                     ],
                     [
+                        'question' => 'Do I need an account to shop?',
+                        'answer' => 'No. Guest checkout is the default. Enter your name, mobile number and delivery address, place the order, and keep your phone reachable for OTP or courier updates.',
+                    ],
+                    [
                         'question' => 'Can an order be changed or stopped after placing it?',
                         'answer' => 'Yes, if packing has not started. Message us from Contact or WhatsApp with your order number right away. After dispatch, the return process applies instead of cancellation.',
                     ],
@@ -90,6 +94,23 @@ class ContentController extends Controller
                         'question' => 'Which areas do you deliver to?',
                         'answer' => 'We ship across India wherever our courier partners support COD. If a pin code cannot be served, we will inform you after the order is received. Full details are on our <a href="'.$shippingPolicyUrl.'">Shipping Policy</a> page.',
                     ],
+                    [
+                        'question' => 'How do I track my order?',
+                        'answer' => 'Use Track Order on this website with the mobile number from checkout, or message support with your order number. Courier partners may also send SMS updates when the parcel moves.',
+                    ],
+                ],
+            ],
+            [
+                'title' => 'Products & Sizing',
+                'items' => [
+                    [
+                        'question' => 'Are product photos and colours accurate?',
+                        'answer' => 'We publish clear product photography and practical descriptions so you can judge colour, finish and scale. Phone screens can shift shades slightly; when unsure, compare similar items in the same collection or ask us on Contact before ordering.',
+                    ],
+                    [
+                        'question' => 'How should I choose size for clothing or footwear?',
+                        'answer' => 'Read the size or fit notes on each product page and use the photos as a guide. If you are between sizes, share your usual brand size with us on Contact or WhatsApp and we will help before you confirm the order.',
+                    ],
                 ],
             ],
             [
@@ -98,6 +119,10 @@ class ContentController extends Controller
                     [
                         'question' => 'How do returns work at Black Rossy?',
                         'answer' => 'Eligible unused items may be returned within 7 days of delivery when tags and packaging are intact. Jewellery and a few personal items can have extra limits. Read the full rules on our <a href="'.$returnPolicyUrl.'">Return Policy</a> page.',
+                    ],
+                    [
+                        'question' => 'What if an item arrives damaged?',
+                        'answer' => 'Contact us the same day with your order number and clear photos of the parcel and product. We will guide the next step under our return and refund rules.',
                     ],
                 ],
             ],
@@ -137,6 +162,7 @@ class ContentController extends Controller
     {
         $categories = Category::query()
             ->active()
+            ->withCatalogProducts()
             ->where(fn ($visible) => $visible->whereNull('parent_id')->orWhereHas('parent', fn ($parent) => $parent->active()))
             ->get();
         $products = Product::query()->active()->select('slug', 'updated_at')->get();

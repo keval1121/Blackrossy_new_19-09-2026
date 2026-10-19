@@ -23,8 +23,11 @@
     </nav>
 
     <div class="mb-4 flex items-end justify-between gap-3">
-        <div>
+        <div class="max-w-3xl">
             <h1 class="font-serif text-3xl md:text-4xl">{{ $heading }}</h1>
+            @if($listingCategory?->description)
+                <p class="mt-3 text-sm leading-6 text-muted md:text-[15px]">{{ $listingCategory->description }}</p>
+            @endif
         </div>
     </div>
 
@@ -159,6 +162,15 @@
             <div id="product-grid">
                 @include('storefront.shop.partials.grid')
             </div>
+
+            @if($listingCategory?->seo_content)
+                <section class="mt-10 rounded-2xl border border-line bg-white px-5 py-6 md:px-7 md:py-8">
+                    <h2 class="font-serif text-2xl text-ink">About {{ $heading }}</h2>
+                    <div class="prose mt-4 max-w-none text-sm leading-7 text-stone-600">
+                        {!! nl2br(e($listingCategory->seo_content)) !!}
+                    </div>
+                </section>
+            @endif
         </div>
     </div>
 </div>

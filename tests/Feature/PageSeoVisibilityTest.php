@@ -60,8 +60,29 @@ class PageSeoVisibilityTest extends TestCase
     public function test_listing_titles_name_the_store_once_and_shop_description_reads_naturally(): void
     {
         $bags = Category::query()->create(['name' => 'Rossy Carry', 'slug' => 'bags', 'is_active' => true, 'seo_title' => 'Rossy Carry | '.store_name()]);
-        Category::query()->create(['parent_id' => $bags->id, 'name' => 'Pocket Carry Line', 'slug' => 'wallets', 'is_active' => true, 'seo_title' => 'Pocket Carry Line | '.store_name()]);
-        Category::query()->create(['parent_id' => $bags->id, 'name' => 'Day Carry Line', 'slug' => 'backpacks', 'is_active' => true]);
+        $wallets = Category::query()->create(['parent_id' => $bags->id, 'name' => 'Pocket Carry Line', 'slug' => 'wallets', 'is_active' => true, 'seo_title' => 'Pocket Carry Line | '.store_name()]);
+        $backpacks = Category::query()->create(['parent_id' => $bags->id, 'name' => 'Day Carry Line', 'slug' => 'backpacks', 'is_active' => true]);
+
+        Product::query()->create([
+            'category_id' => $bags->id,
+            'sub_category_id' => $wallets->id,
+            'name' => 'Slim Pocket Wallet',
+            'slug' => 'slim-pocket-wallet',
+            'mrp' => 699,
+            'selling_price' => 499,
+            'stock_quantity' => 3,
+            'status' => ProductStatus::Active,
+        ]);
+        Product::query()->create([
+            'category_id' => $bags->id,
+            'sub_category_id' => $backpacks->id,
+            'name' => 'City Day Backpack',
+            'slug' => 'city-day-backpack',
+            'mrp' => 1599,
+            'selling_price' => 1199,
+            'stock_quantity' => 2,
+            'status' => ProductStatus::Active,
+        ]);
 
         $this->get('/bags')->assertOk()->assertSee('<title>Rossy Carry | '.store_name().'</title>', false);
         $this->get('/bags/wallets')->assertOk()->assertSee('<title>Pocket Carry Line | '.store_name().'</title>', false);

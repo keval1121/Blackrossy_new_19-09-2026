@@ -60,8 +60,9 @@ class ShopController extends Controller
     {
         $subcategories = Category::query()
             ->active()
+            ->withCatalogProducts()
             ->whereNotNull('parent_id')
-            ->whereHas('parent', fn ($parent) => $parent->active())
+            ->whereHas('parent', fn ($parent) => $parent->active()->withCatalogProducts())
             ->with('parent')
             ->orderBy('display_order')
             ->orderBy('name')

@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Enums\ProductStatus;
 use App\Models\Admin;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -20,9 +22,12 @@ class StorefrontCollectionCopyTest extends TestCase
             'is_active' => true,
         ]);
 
-        Category::query()->create(['name' => 'Rossy Apparel', 'slug' => 'fashion', 'is_active' => true, 'display_order' => 1]);
+        $fashion = Category::query()->create(['name' => 'Rossy Apparel', 'slug' => 'fashion', 'is_active' => true, 'display_order' => 1]);
         $jewellery = Category::query()->create(['name' => 'Rossy Lustre', 'slug' => 'jewellery', 'is_active' => false, 'display_order' => 2]);
-        Category::query()->create(['name' => 'Rossy Carry', 'slug' => 'bags', 'is_active' => true, 'display_order' => 3]);
+        $bags = Category::query()->create(['name' => 'Rossy Carry', 'slug' => 'bags', 'is_active' => true, 'display_order' => 3]);
+        $this->stock($fashion, 'visible-apparel-tee');
+        $this->stock($bags, 'visible-carry-tote');
+        $this->stock($jewellery, 'hidden-lustre-ring');
 
         $hidden = $this->get(route('about'));
         $hidden->assertOk();
@@ -42,8 +47,9 @@ class StorefrontCollectionCopyTest extends TestCase
 
     public function test_default_seo_title_names_only_active_collections(): void
     {
-        Category::query()->create(['name' => 'Rossy Apparel', 'slug' => 'fashion', 'is_active' => true, 'display_order' => 1]);
+        $fashion = Category::query()->create(['name' => 'Rossy Apparel', 'slug' => 'fashion', 'is_active' => true, 'display_order' => 1]);
         Category::query()->create(['name' => 'Rossy Stride', 'slug' => 'footwear', 'is_active' => false, 'display_order' => 2]);
+        $this->stock($fashion, 'seo-apparel-shirt');
 
         $response = $this->get(route('home'));
 
@@ -52,5 +58,18 @@ class StorefrontCollectionCopyTest extends TestCase
         $response->assertSee('Shop clothing at '.store_name(), false);
         $response->assertDontSee('Stride');
         $response->assertDontSee('footwear');
+    }
+
+    private function stock(Category $category, string $slug): void
+    {
+        Product::query()->create([
+            'category_id' => $category->id,
+            'name' => 'Stock '.$slug,
+            'slug' => $slug,
+            'mrp' => 999,
+            'selling_price' => 799,
+            'stock_quantity' => 2,
+            'status' => ProductStatus::Active,
+        ]);
     }
 }

@@ -143,7 +143,7 @@ class CatalogService
             'attributes' => $attributes,
             'min' => (int) floor((float) ($price->min_price ?? 0)),
             'max' => (int) ceil((float) ($price->max_price ?? 0)),
-            'children' => $parent?->children()->active()->orderBy('display_order')->get() ?? collect(),
+            'children' => $parent?->children()->active()->withCatalogProducts()->orderBy('display_order')->get() ?? collect(),
         ];
     }
 }

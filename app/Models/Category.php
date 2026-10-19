@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -64,6 +65,52 @@ class Category extends Model
     public function scopeParents(Builder $query): Builder
     {
         return $query->whereNull('parent_id');
+    }
+
+    /**
+     * Categories that currently have at least one active product in their tree.
+     * Keeps empty lines out of nav, sitemap and browse pages (AdSense thin-content safe).
+     */
+    public function scopeWithCatalogProducts(Builder $query): Builder
+    {
+        $activeProduct = fn (Builder $products): Builder => $products->where('status', ProductStatus::Active);
+
+        return $query->where(function (Builder $visible) use ($activeProduct): void {
+            $visible
+                ->whereHas('products', $activeProduct)
+                ->orWhereHas('subCategoryProducts', $activeProduct)
+                ->orWhereHas('children', function (Builder $child) use ($activeProduct): void {
+                    $child->where('is_active', true)
+                        ->where(function (Builder $childVisible) use ($activeProduct): void {
+                            $childVisible
+                                ->whereHas('products', $activeProduct)
+                                ->orWhereHas('subCategoryProducts', $activeProduct);
+                        });
+                });
+        });
+    }
+
+    public function hasCatalogProducts(): bool
+    {
+        if ($this->products()->where('status', ProductStatus::Active)->exists()) {
+            return true;
+        }
+
+        if ($this->subCategoryProducts()->where('status', ProductStatus::Active)->exists()) {
+            return true;
+        }
+
+        if ($this->parent_id !== null) {
+            return false;
+        }
+
+        return $this->children()
+            ->where('is_active', true)
+            ->where(function (Builder $child): void {
+                $child->whereHas('products', fn (Builder $products) => $products->where('status', ProductStatus::Active))
+                    ->orWhereHas('subCategoryProducts', fn (Builder $products) => $products->where('status', ProductStatus::Active));
+            })
+            ->exists();
     }
 
     public function getRouteKeyName(): string

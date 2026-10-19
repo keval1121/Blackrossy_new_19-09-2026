@@ -17,13 +17,14 @@ class StorefrontComposer
                 return Category::query()
                     ->active()
                     ->parents()
+                    ->withCatalogProducts()
                     ->orderBy('display_order')
                     ->pluck('id')
                     ->all();
             });
 
             $navCategories = Category::query()
-                ->with(['children' => fn ($query) => $query->active()->with('parent')->orderBy('display_order')])
+                ->with(['children' => fn ($query) => $query->active()->withCatalogProducts()->with('parent')->orderBy('display_order')])
                 ->whereIn('id', $categories)
                 ->orderBy('display_order')
                 ->get();

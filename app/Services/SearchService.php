@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 
 class SearchService
 {
@@ -37,6 +36,7 @@ class SearchService
 
         $categories = Category::query()
             ->active()
+            ->withCatalogProducts()
             ->where('name', 'like', '%'.$term.'%')
             ->orderBy('display_order')
             ->limit(5)
