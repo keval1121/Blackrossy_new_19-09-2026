@@ -72,6 +72,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('categories', CategoryController::class)->except(['show']);
         Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
         Route::get('orders/export', [AdminOrderController::class, 'export'])->name('orders.export');
+        Route::post('orders/bulk-status', [AdminOrderController::class, 'bulkStatus'])->name('orders.bulk-status');
         Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::post('orders/{order}/status', [AdminOrderController::class, 'status'])->name('orders.status');
         Route::get('orders/{order}/print', [AdminOrderController::class, 'print'])->name('orders.print');

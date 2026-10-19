@@ -47,6 +47,37 @@ class OrderController extends Controller
         return back()->with('status', 'Order status updated.');
     }
 
+    public function bulkStatus(Request $request, OrderService $orders)
+    {
+        $data = $request->validate([
+            'ids' => ['required', 'array', 'min:1'],
+            'ids.*' => ['integer', 'distinct', 'exists:orders,id'],
+            'status' => ['required', Rule::enum(OrderStatus::class)],
+            'note' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $status = OrderStatus::from($data['status']);
+        $adminId = $request->user('admin')?->id;
+        $note = $data['note'] ?? null;
+        $updated = 0;
+
+        Order::query()
+            ->whereIn('id', $data['ids'])
+            ->orderBy('id')
+            ->each(function (Order $order) use ($orders, $status, $note, $adminId, &$updated): void {
+                if ($order->status === $status) {
+                    return;
+                }
+
+                $orders->changeStatus($order, $status, $note, $adminId);
+                $updated++;
+            });
+
+        return back()->with('status', $updated === 1
+            ? '1 order status updated.'
+            : "{$updated} order statuses updated.");
+    }
+
     public function print(Order $order)
     {
         $order->load(['items', 'address']);
