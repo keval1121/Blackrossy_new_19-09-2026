@@ -15,9 +15,10 @@
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
     # Hostinger document root = project root (not /public).
-    # Map public asset URLs to the real folders.
-    # Serve uploads from storage/app/public directly (no symlink required).
+    # Map asset URLs without needing public/storage symlink (exec/symlink often disabled).
+    # Guard against rewrite loops: /storage → storage/app/public → must not rematch ^storage/.
     RewriteRule ^build/(.*)$ public/build/$1 [L,NC]
+    RewriteRule ^storage/app/public/(.*)$ - [L]
     RewriteRule ^storage/(.*)$ storage/app/public/$1 [L,NC]
     RewriteRule ^images/(.*)$ public/images/$1 [L,NC]
     RewriteRule ^favicon\.ico$ public/favicon.ico [L,NC]
