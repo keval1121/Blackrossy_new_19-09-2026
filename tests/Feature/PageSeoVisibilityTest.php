@@ -39,7 +39,7 @@ class PageSeoVisibilityTest extends TestCase
         ]);
     }
 
-    public function test_contact_and_categories_have_their_own_titles(): void
+    public function test_contact_has_its_own_title_and_categories_redirects_home(): void
     {
         $homeTitle = '<title>'.store_name().' | Rossy Apparel</title>';
 
@@ -50,11 +50,7 @@ class PageSeoVisibilityTest extends TestCase
         $contact->assertSee('Send message');
         $contact->assertSee('<form method="post"', false);
 
-        $categories = $this->get(route('categories'));
-        $categories->assertOk();
-        $categories->assertSee('<title>Shop by Category | '.store_name().'</title>', false);
-        $categories->assertSee('Browse every Rossy Apparel line at '.store_name(), false);
-        $categories->assertDontSee($homeTitle, false);
+        $this->get('/categories')->assertRedirect('/');
     }
 
     public function test_listing_titles_name_the_store_once_and_shop_description_reads_naturally(): void
@@ -114,7 +110,7 @@ class PageSeoVisibilityTest extends TestCase
 
     public function test_public_pages_stay_indexable(): void
     {
-        foreach ([route('home'), route('shop'), route('categories'), route('contact'), route('product.show', $this->product)] as $url) {
+        foreach ([route('home'), route('shop'), route('contact'), route('product.show', $this->product)] as $url) {
             $this->get($url)->assertOk()->assertDontSee(self::NOINDEX, false);
         }
     }

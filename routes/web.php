@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
-Route::get('/categories', [ShopController::class, 'categories'])->name('categories');
+Route::redirect('/categories', '/', 301)->name('categories');
 Route::get('/search', [ContentController::class, 'search'])->middleware('throttle:search')->name('search');
 Route::get('/product/{product:slug}', [ProductController::class, 'show'])->name('product.show');
 

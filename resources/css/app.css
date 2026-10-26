@@ -1061,6 +1061,11 @@ input:focus, select:focus, textarea:focus {
 .cat-nav-trigger {
     display: inline-block;
     padding-block: 0.35rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
 }
 
 .cat-nav-dropdown {
@@ -1109,26 +1114,7 @@ input:focus, select:focus, textarea:focus {
     color: var(--color-gold-dark);
 }
 
-.cat-menu-all {
-    display: block;
-    margin-top: 0.2rem;
-    padding: 0.55rem 0.75rem;
-    border-top: 1px solid var(--color-line);
-    border-radius: 0 0 0.65rem 0.65rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-muted);
-}
-
-.cat-menu-all:hover {
-    color: var(--color-ink);
-}
-
-/* Homepage / categories lookbook mosaic */
-.lookbook-page {
-    border-top: 1px solid var(--color-line);
-}
-
+/* Homepage lookbook mosaic */
 .lookbook-head {
     display: flex;
     flex-wrap: wrap;

@@ -57,23 +57,4 @@ class ShopController extends Controller
             'heading' => $child?->name ?: $category->name,
         ]);
     }
-
-    public function categories()
-    {
-        $subcategories = Category::query()
-            ->active()
-            ->withCatalogProducts()
-            ->whereNotNull('parent_id')
-            ->whereHas('parent', fn ($parent) => $parent->active()->withCatalogProducts())
-            ->with('parent')
-            ->orderBy('display_order')
-            ->orderBy('name')
-            ->get();
-
-        return view('storefront.shop.categories', [
-            'subcategories' => $subcategories,
-            'seoTitle' => 'Shop by Category | '.store_name(),
-            'seoDescription' => 'Browse every '.storefront_collection_names().' line at '.store_name().', with '.storefront_product_types().' delivered across India on Cash on Delivery.',
-        ]);
-    }
 }

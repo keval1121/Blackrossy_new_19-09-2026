@@ -64,11 +64,13 @@ class AdsenseContentReadinessTest extends TestCase
         $home->assertDontSee('Rossy Lustre');
         $home->assertDontSee('Little Apparel Line');
 
-        $categories = $this->get(route('categories'));
-        $categories->assertOk();
-        $categories->assertSee('Mens Apparel Line');
-        $categories->assertDontSee('Little Apparel Line');
-        $categories->assertDontSee('Rossy Lustre');
+        $homeCollections = $this->get(route('home'));
+        $homeCollections->assertOk();
+        $homeCollections->assertSee('Mens Apparel Line');
+        $homeCollections->assertDontSee('Little Apparel Line');
+        $homeCollections->assertDontSee('Rossy Lustre');
+
+        $this->get('/categories')->assertRedirect('/');
 
         $sitemap = $this->get('/sitemap.xml');
         $sitemap->assertOk();

@@ -2,7 +2,7 @@
     <div class="rounded-3xl border border-dashed border-line bg-white px-6 py-16 text-center">
         <p class="font-serif text-2xl">No products found</p>
         <p class="mt-2 text-sm text-muted">Try another category or check back soon.</p>
-        <a href="{{ route('categories') }}" class="btn btn-outline mt-6">Browse categories</a>
+        <a href="{{ url('/#collections') }}" class="btn btn-outline mt-6">Browse categories</a>
     </div>
 @else
     <div class="grid grid-cols-2 gap-3 lg:grid-cols-3">

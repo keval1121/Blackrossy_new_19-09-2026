@@ -26,7 +26,7 @@
             <p class="house-hero-sub house-hero-sub--short">From our shelves · COD available</p>
             <div class="house-hero-actions">
                 <a href="{{ $heroUrl }}" class="btn btn-primary">{{ $heroCta }}</a>
-                <a href="{{ route('categories') }}" class="house-hero-link">Browse categories</a>
+                <a href="#collections" class="house-hero-link">Browse categories</a>
             </div>
         </div>
 
@@ -53,14 +53,13 @@
 @php
     $homeSubs = $featuredSubcategories->isNotEmpty() ? $featuredSubcategories : $navSubcategories;
 @endphp
-<section class="lookbook mt-10 md:mt-16" aria-labelledby="lookbook-title">
+<section id="collections" class="lookbook mt-10 md:mt-16 scroll-mt-24" aria-labelledby="lookbook-title">
     <div class="container-store">
         <div class="lookbook-head">
             <div>
                 <p class="lookbook-kicker">Collections</p>
                 <h2 id="lookbook-title" class="lookbook-title">{{ $sections->get('featured_categories')->title ?? 'Shop by category' }}</h2>
             </div>
-            <a href="{{ route('categories') }}" class="lookbook-link">See every line →</a>
         </div>
 
         <div class="lookbook-mosaic">

@@ -8,13 +8,12 @@
         <nav class="ml-auto hidden items-center gap-5 text-sm font-medium lg:flex">
             <a href="{{ route('home') }}" class="hover:text-gold">Home</a>
             <div class="cat-nav" data-cat-nav>
-                <a href="{{ route('categories') }}" class="cat-nav-trigger hover:text-gold">Categories</a>
+                <button type="button" class="cat-nav-trigger hover:text-gold" aria-expanded="false" aria-haspopup="true">Categories</button>
                 <div class="cat-nav-dropdown" data-cat-dropdown>
                     <div class="cat-menu">
                         @foreach($navSubcategories as $child)
                             <a href="{{ $child->url() }}" class="cat-menu-link">{{ $child->name }}</a>
                         @endforeach
-                        <a href="{{ route('categories') }}" class="cat-menu-all">All categories →</a>
                     </div>
                 </div>
             </div>
