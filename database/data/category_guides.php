@@ -113,23 +113,49 @@ Fit guidance
 Footwear comfort depends on strap placement and toe shape as much as length. Read each product’s notes and compare photos of the footbed. If you are between sizes, prefer the guidance on the listing. New sandals often soften after a few short wears indoors.
 
 Care and delivery
-Wipe dust after outdoor use and avoid prolonged waterlogging unless the listing says otherwise. Free shipping applies on every Black Rossy order. Mens and Womens Stride lines sit under this collection — open a line to narrow the grid, or use filters for price.
+Wipe dust after outdoor use and avoid prolonged waterlogging unless the listing says otherwise. Free shipping applies on every Black Rossy order. When footwear lines are stocked, open a line to narrow the grid, or use filters for price.
 TXT,
     ],
-    'mens-footwear' => [
-        'seo_title' => 'Mens Stride | Sandals & Slides | Black Rossy',
-        'seo_description' => 'Mens Stride footwear at Black Rossy — slides and casual sandals with clear photos and Cash on Delivery.',
-        'description' => 'Mens Stride Line focuses on slides and casual sandals for daily wear.',
+    'ethnic-tops' => [
+        'seo_title' => 'Ethnic Tops | Rossy Apparel | Black Rossy',
+        'seo_description' => 'Shop ethnic tops at Black Rossy — embroidered and printed styles with clear photos and Cash on Delivery across India.',
+        'description' => 'Ethnic tops for daily wear and festive plans — embroidered, printed and easy-to-style pieces.',
         'seo_content' => <<<'TXT'
-Mens Stride listings highlight strap layout, sole colour and how structured the slide feels in photos. Choose darker tones for everyday pairing with jeans; lighter or textured pairs for weekend outfits. Confirm size notes on each product, order with Cash on Delivery on eligible pin codes, and keep the box if you may need a return under our 7-day eligible-return rules.
+Ethnic Tops is a Rossy Apparel line for blouses, kurtis and statement tops that work for family gatherings, festivals and dressed-up everyday looks.
+
+How to choose
+Look at neckline, sleeve length and embroidery density in the photos. Heavier mirrorwork and brighter prints suit festive evenings; lighter prints suit office-to-evening wear. Read each product page for fabric and care notes before you order.
+
+Shopping tips
+Compare similar tops in this line for colour and length. Guest checkout and Cash on Delivery are available on eligible pin codes, with free shipping on every Black Rossy order. Eligible unused returns follow the Return Policy window.
 TXT,
     ],
-    'womens-footwear' => [
-        'seo_title' => 'Womens Stride | Sandals & Flats | Black Rossy',
-        'seo_description' => 'Womens Stride sandals and flats at Black Rossy with styling notes and Cash on Delivery across India.',
-        'description' => 'Womens Stride Line includes flats and sandals for daily comfort and dressed-up casual looks.',
+    'co-ord-ethnic-sets' => [
+        'seo_title' => 'Co-ord Ethnic Sets | Rossy Apparel | Black Rossy',
+        'seo_description' => 'Shop co-ord ethnic sets at Black Rossy — coordinated tops and bottoms with clear photos and Cash on Delivery.',
+        'description' => 'Matching ethnic co-ord sets so you can wear a ready outfit without hunting for separate bottoms.',
         'seo_content' => <<<'TXT'
-Womens Stride is curated for flats and sandals that work with kurtis, jeans and summer dresses. Look at strap detail, heel height cues and colour in the gallery. Soft fabrics and bow details read dressier; simpler slides suit travel. Free shipping and COD follow standard Black Rossy checkout rules.
+Co-ord Ethnic Sets brings matching shirt-and-pant or kurti-style outfits together so shopping stays simple. Each listing shows how the set looks as a full look, not only a single piece.
+
+How to choose
+Check print placement across top and bottom, sleeve style and whether the set feels festive or everyday. Co-ords save time for travel and functions; if you prefer mix-and-match, browse Ethnic Tops or Cotton Workday Shirts instead.
+
+Care and delivery
+Follow care notes on each product — many printed sets last longer with mild wash and shade drying. Packing is usually 1–2 working days with free shipping and Cash on Delivery on eligible pin codes.
+TXT,
+    ],
+    'cotton-workday-shirts' => [
+        'seo_title' => 'Cotton Workday Shirts | Rossy Apparel | Black Rossy',
+        'seo_description' => 'Shop cotton workday shirts at Black Rossy — clear photos, fit notes and Cash on Delivery across India.',
+        'description' => 'Breathable workday shirts for office, college and everyday Indian weather.',
+        'seo_content' => <<<'TXT'
+Cotton Workday Shirts focuses on button-downs and everyday shirts you can wear to work, college or weekend outings. Listings highlight collar style, sleeve length, print and colour so you can decide from your phone.
+
+Fit and pairing
+Full sleeves layer well in AC offices; lighter weaves suit humid days. Pair solids with jeans or trousers, and keep bold prints with quieter bottoms. Read size notes on each product if you are between sizes.
+
+Order with confidence
+Guest checkout, free shipping and Cash on Delivery on eligible pin codes. Keep tags if you may need an eligible return within the window on our Return Policy page.
 TXT,
     ],
     'bags' => [

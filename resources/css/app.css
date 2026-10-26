@@ -78,24 +78,39 @@ body {
 
 .ad-slot {
     overflow: hidden;
+    margin-block: .75rem;
     border-top: 1px solid var(--color-line);
     border-bottom: 1px solid var(--color-line);
-    padding-block: .75rem 1rem;
+    padding-block: .55rem .65rem;
 }
 
 .ad-slot-label {
-    margin-bottom: .5rem;
+    margin-bottom: .35rem;
     text-align: center;
     color: #a8a29e;
-    font-size: .65rem;
-    letter-spacing: .18em;
+    font-size: .62rem;
+    letter-spacing: .16em;
     text-transform: uppercase;
 }
 
 .ad-slot-unit {
-    min-height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 0;
     max-width: 100%;
 }
+
+.ad-slot-unit:has(ins.adsbygoogle) {
+    min-height: 90px;
+}
+
+.ad-slot-unit ins.adsbygoogle {
+    display: block;
+    width: 100%;
+    min-height: 90px;
+}
+
 
 .faq-page {
     border-top: 1px solid var(--color-line);
@@ -831,6 +846,53 @@ input:focus, select:focus, textarea:focus {
     font-weight: 700;
     padding: .2rem .45rem;
     border-radius: .4rem;
+}
+
+.listing-sort {
+    width: auto;
+    min-width: 7.25rem;
+    min-height: 2.25rem;
+    padding: .35rem .85rem;
+    border-radius: 999px;
+    font-size: .875rem;
+    background: white;
+}
+
+@media (min-width: 768px) {
+    .listing-sort {
+        min-width: 9.5rem;
+        min-height: 2.75rem;
+        padding: .5rem 1rem;
+    }
+}
+
+.shipping-meta {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .shipping-meta {
+        display: inline;
+    }
+}
+
+.nav-chip.is-active {
+    color: var(--color-ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+}
+
+.listing-about {
+    padding-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .listing-about {
+        margin-top: 2.5rem;
+        padding-top: 2rem;
+    }
 }
 
 /* Listing filters: drawer on mobile, sidebar on desktop */

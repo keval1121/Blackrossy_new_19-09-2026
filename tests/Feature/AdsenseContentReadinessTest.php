@@ -79,6 +79,9 @@ class AdsenseContentReadinessTest extends TestCase
         $this->assertTrue($emptyParent->fresh()->is_active);
         $this->assertFalse($emptyParent->hasCatalogProducts());
         $this->assertFalse($emptyChild->hasCatalogProducts());
+
+        $this->get('/fashion/kids-clothing')->assertNotFound();
+        $this->get('/fashion/mens-clothing')->assertOk();
     }
 
     public function test_category_listing_shows_guide_copy(): void

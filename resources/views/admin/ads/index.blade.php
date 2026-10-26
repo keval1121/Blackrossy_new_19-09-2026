@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('title', 'Ad placements')
 @section('content')
-<p class="mb-2 text-sm text-stone-500">Paste <strong>ad unit</strong> code here (the block with <code>data-ad-slot</code>). The publisher script already loads from Settings → Client ID in the site &lt;head&gt;.</p>
-<p class="mb-4 text-sm text-stone-500">Keep placements inactive and “Show ads” off until AdSense marks the site Ready. Ads (including Auto ads) never load on cart, checkout, order, tracking or error pages, and every placement carries a small “Advertisement” label.</p>
+<p class="mb-2 text-sm text-stone-500">Paste <strong>Display ad unit</strong> code here (must include <code>data-ad-slot</code>). Prefer Auto / responsive units. The publisher script loads from Settings when <strong>Show ads</strong> is ON — that same script powers <strong>Auto ads</strong> from the AdSense dashboard.</p>
+<p class="mb-4 text-sm text-stone-500">Until Ready: keep placements inactive and Show ads OFF. After Ready: enable Show ads, turn on Auto ads in AdSense, then optionally activate these manual slots. Ads never load on cart, checkout, order, tracking or error pages. Every slot shows an “Advertisement” label with safe spacing from product buttons.</p>
 <div class="space-y-4">
     @foreach($ads as $ad)
         <form method="post" action="{{ route('admin.ads.save', $ad) }}" class="rounded-2xl bg-white p-5">

@@ -27,7 +27,7 @@ return [
     'ad_positions' => [
         'home_middle' => 'Homepage — between Trending and Best sellers',
         'home_bottom' => 'Homepage — after the shipping & returns strip',
-        'category_top' => 'Category — above the products (desktop only)',
+        'category_top' => 'Category / Shop — after intro text, before products',
         'listing_middle' => 'Category & search — after the 6th product',
         'product_bottom' => 'Product — after the description',
     ],

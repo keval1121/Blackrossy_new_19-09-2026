@@ -36,6 +36,8 @@ class ShopController extends Controller
         $child = null;
         if ($subcategory) {
             $child = $category->children()->active()->where('slug', $subcategory)->firstOrFail();
+            // Hide empty lines from crawlers / AdSense until they have active products.
+            abort_unless($child->hasCatalogProducts(), 404);
         }
 
         $data = $catalog->listing($request, $category, $child);

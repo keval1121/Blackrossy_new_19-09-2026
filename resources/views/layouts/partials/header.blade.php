@@ -1,6 +1,6 @@
 <header class="sticky top-0 z-40 border-b border-line bg-cream/95 backdrop-blur">
     <div class="container-store flex items-center gap-4 py-3">
-        <a href="{{ route('home') }}" class="font-serif text-3xl tracking-tight text-ink">{{ store_name() }}</a>
+        <a href="{{ route('home') }}" class="font-serif text-2xl tracking-tight text-ink md:text-4xl">{{ store_name() }}</a>
         <form action="{{ route('search') }}" method="get" class="relative hidden flex-1 md:block">
             <input id="live-search" name="q" value="{{ request('q') }}" placeholder="Search {{ storefront_product_types(', ') }}..." class="pl-4 pr-12" autocomplete="off">
             <div id="search-suggest" class="absolute z-50 mt-2 hidden w-full overflow-hidden rounded-2xl border border-line bg-white shadow-xl"></div>
@@ -34,9 +34,16 @@
         </div>
     </div>
     <div class="border-t border-line md:hidden">
-        <div class="container-store flex gap-3 overflow-x-auto py-2 text-sm">
+        <div class="container-store flex gap-4 overflow-x-auto py-2.5 text-sm">
             @foreach($navSubcategories as $child)
-                <a href="{{ $child->url() }}" class="whitespace-nowrap text-muted">{{ $child->name }}</a>
+                @php
+                    $childPath = trim(parse_url($child->url(), PHP_URL_PATH) ?: '', '/');
+                    $isActive = $childPath !== '' && request()->is($childPath);
+                @endphp
+                <a
+                    href="{{ $child->url() }}"
+                    class="nav-chip whitespace-nowrap {{ $isActive ? 'is-active' : 'text-muted' }}"
+                >{{ $child->name }}</a>
             @endforeach
         </div>
     </div>
