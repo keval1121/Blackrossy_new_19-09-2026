@@ -783,6 +783,94 @@ input:focus, select:focus, textarea:focus {
     color: #9f1239;
 }
 
+.product-gallery-stage {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2rem;
+    background: white;
+}
+
+.product-gallery-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.product-gallery-nav {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 253, 249, 0.92);
+    color: var(--color-ink);
+    box-shadow: 0 6px 18px rgba(28, 25, 23, 0.12);
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.product-gallery-nav:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.04);
+}
+
+.product-gallery-nav-prev {
+    left: 0.75rem;
+}
+
+.product-gallery-nav-next {
+    right: 0.75rem;
+}
+
+.product-gallery-thumbs {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    overflow-x: auto;
+}
+
+.product-gallery-thumb {
+    flex: 0 0 auto;
+    width: 4rem;
+    height: 4rem;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 0.85rem;
+    padding: 0;
+    background: white;
+    cursor: pointer;
+    opacity: 0.72;
+    transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+
+.product-gallery-thumb.is-active,
+.product-gallery-thumb:hover {
+    opacity: 1;
+    border-color: var(--color-ink);
+}
+
+@media (max-width: 767px) {
+    .product-gallery-nav {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    .product-gallery-nav-prev {
+        left: 0.55rem;
+    }
+
+    .product-gallery-nav-next {
+        right: 0.55rem;
+    }
+}
+
 .qty-stepper {
     display: inline-flex;
     align-items: center;

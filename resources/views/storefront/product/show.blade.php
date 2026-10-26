@@ -26,18 +26,54 @@
 @section('content')
 <div class="container-store py-6 md:grid md:grid-cols-2 md:gap-10">
     <div>
-        <div class="overflow-hidden rounded-[2rem] bg-white">
-            <img id="main-image" src="{{ $product->displayImage()?->url('large') ?? $product->thumbUrl() }}" alt="{{ $product->name }}" class="aspect-square w-full object-cover">
-        </div>
-        @if($product->images->count() > 1)
-            <div class="mt-3 flex gap-2 overflow-x-auto">
-                @foreach($product->images as $image)
-                    <button type="button" class="h-16 w-16 overflow-hidden rounded-xl" onclick="document.getElementById('main-image').src='{{ $image->url('large') }}'">
-                        <img src="{{ $image->url('thumb') }}" alt="" class="h-full w-full object-cover" loading="lazy">
+        @php
+            $galleryImages = $product->images->values();
+            $galleryMain = $product->displayImage();
+            $galleryStart = 0;
+            if ($galleryMain) {
+                $foundIndex = $galleryImages->search(fn ($image) => $image->id === $galleryMain->id);
+                $galleryStart = $foundIndex === false ? 0 : (int) $foundIndex;
+            }
+            $galleryUrls = $galleryImages->map(fn ($image) => $image->url('large'))->values()->all();
+            if ($galleryUrls === []) {
+                $galleryUrls = [$product->thumbUrl()];
+            }
+        @endphp
+        <div class="product-gallery" data-product-gallery data-start="{{ $galleryStart }}">
+            <div class="product-gallery-stage">
+                <img
+                    id="main-image"
+                    class="product-gallery-image"
+                    src="{{ $galleryUrls[$galleryStart] ?? $galleryUrls[0] }}"
+                    alt="{{ $product->name }}"
+                    data-gallery-image
+                >
+                @if(count($galleryUrls) > 1)
+                    <button type="button" class="product-gallery-nav product-gallery-nav-prev" data-gallery-prev aria-label="Previous image">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
                     </button>
-                @endforeach
+                    <button type="button" class="product-gallery-nav product-gallery-nav-next" data-gallery-next aria-label="Next image">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+                    </button>
+                @endif
             </div>
-        @endif
+            @if(count($galleryUrls) > 1)
+                <div class="product-gallery-thumbs" role="list">
+                    @foreach($galleryImages as $index => $image)
+                        <button
+                            type="button"
+                            class="product-gallery-thumb {{ $index === $galleryStart ? 'is-active' : '' }}"
+                            data-gallery-thumb
+                            data-index="{{ $index }}"
+                            aria-label="View image {{ $index + 1 }}"
+                        >
+                            <img src="{{ $image->url('thumb') }}" alt="" class="h-full w-full object-cover" loading="lazy">
+                        </button>
+                    @endforeach
+                </div>
+            @endif
+            <script type="application/json" data-gallery-sources>{!! json_encode($galleryUrls, JSON_UNESCAPED_SLASHES) !!}</script>
+        </div>
     </div>
     <div>
         <nav class="text-xs text-muted">
@@ -121,6 +157,35 @@
 @endif
 
 <script>
+    document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {
+        const sourcesNode = gallery.querySelector('[data-gallery-sources]');
+        const image = gallery.querySelector('[data-gallery-image]');
+        const thumbs = [...gallery.querySelectorAll('[data-gallery-thumb]')];
+        const sources = sourcesNode ? JSON.parse(sourcesNode.textContent || '[]') : [];
+        if (!image || sources.length < 2) {
+            return;
+        }
+
+        let index = Number(gallery.dataset.start || 0);
+        if (index < 0 || index >= sources.length) {
+            index = 0;
+        }
+
+        const show = (nextIndex) => {
+            index = (nextIndex + sources.length) % sources.length;
+            image.src = sources[index];
+            thumbs.forEach((thumb, thumbIndex) => {
+                thumb.classList.toggle('is-active', thumbIndex === index);
+            });
+        };
+
+        gallery.querySelector('[data-gallery-prev]')?.addEventListener('click', () => show(index - 1));
+        gallery.querySelector('[data-gallery-next]')?.addEventListener('click', () => show(index + 1));
+        thumbs.forEach((thumb) => {
+            thumb.addEventListener('click', () => show(Number(thumb.dataset.index || 0)));
+        });
+    });
+
     const variants = @json($variantMap);
     const stockLabel = document.getElementById('stock-label');
     const setStockLabel = (inStock) => {
