@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Enums\ProductStatus;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Product;
 use App\Models\Setting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -82,6 +83,68 @@ class AdsenseContentReadinessTest extends TestCase
 
         $this->get('/fashion/kids-clothing')->assertNotFound();
         $this->get('/fashion/mens-clothing')->assertOk();
+    }
+
+    public function test_sitemap_only_lists_urls_that_open(): void
+    {
+        $apparel = Category::query()->create([
+            'name' => 'Rossy Apparel',
+            'slug' => 'fashion',
+            'is_active' => true,
+            'display_order' => 1,
+        ]);
+        $liveChild = Category::query()->create([
+            'parent_id' => $apparel->id,
+            'name' => 'Mens Apparel Line',
+            'slug' => 'mens-clothing',
+            'is_active' => true,
+            'display_order' => 1,
+        ]);
+        $emptyChild = Category::query()->create([
+            'parent_id' => $apparel->id,
+            'name' => 'Cotton Workday Shirts',
+            'slug' => 'cotton-workday-shirts',
+            'is_active' => true,
+            'display_order' => 2,
+        ]);
+
+        Product::query()->create([
+            'category_id' => $apparel->id,
+            'sub_category_id' => $liveChild->id,
+            'name' => 'Canvas Work Shirt',
+            'slug' => 'canvas-work-shirt',
+            'mrp' => 1299,
+            'selling_price' => 999,
+            'stock_quantity' => 4,
+            'status' => ProductStatus::Active,
+        ]);
+
+        Page::query()->create([
+            'title' => 'Orphan Page',
+            'slug' => 'orphan-unrouted-page',
+            'content' => 'Should not appear in sitemap.',
+            'is_active' => true,
+        ]);
+        Page::query()->create([
+            'title' => 'Privacy Policy',
+            'slug' => 'privacy-policy',
+            'content' => 'Privacy copy.',
+            'is_active' => true,
+        ]);
+
+        $response = $this->get('/sitemap.xml');
+        $response->assertOk();
+        $response->assertSee('/fashion/mens-clothing');
+        $response->assertSee('canvas-work-shirt');
+        $response->assertSee('/privacy-policy');
+        $response->assertDontSee('cotton-workday-shirts');
+        $response->assertDontSee('orphan-unrouted-page');
+
+        preg_match_all('#<loc>([^<]+)</loc>#', $response->getContent(), $matches);
+        foreach ($matches[1] as $loc) {
+            $path = parse_url($loc, PHP_URL_PATH) ?: '/';
+            $this->get($path)->assertOk();
+        }
     }
 
     public function test_category_listing_shows_guide_copy(): void

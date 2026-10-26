@@ -160,13 +160,48 @@ class ContentController extends Controller
 
     public function sitemap()
     {
+        // Only URLs that the storefront will actually open (200). Empty / off lines stay out.
         $categories = Category::query()
             ->active()
             ->withCatalogProducts()
-            ->where(fn ($visible) => $visible->whereNull('parent_id')->orWhereHas('parent', fn ($parent) => $parent->active()))
+            ->where(function ($visible): void {
+                $visible
+                    ->whereNull('parent_id')
+                    ->orWhereHas(
+                        'parent',
+                        fn ($parent) => $parent->active()->withCatalogProducts()
+                    );
+            })
             ->get();
-        $products = Product::query()->active()->select('slug', 'updated_at')->get();
-        $pages = Page::query()->where('is_active', true)->get();
+
+        $products = Product::query()
+            ->active()
+            ->whereHas('category', fn ($category) => $category->active()->withCatalogProducts())
+            ->where(function ($visible): void {
+                $visible
+                    ->whereNull('sub_category_id')
+                    ->orWhereHas(
+                        'subCategory',
+                        fn ($subCategory) => $subCategory->active()->withCatalogProducts()
+                    );
+            })
+            ->select('slug', 'updated_at')
+            ->get();
+
+        $pages = Page::query()
+            ->where('is_active', true)
+            ->whereIn('slug', [
+                'about',
+                'faq',
+                'privacy-policy',
+                'terms',
+                'shipping-policy',
+                'return-policy',
+                'refund-policy',
+                'cancellation-policy',
+                'cookie-policy',
+            ])
+            ->get();
 
         return response()
             ->view('storefront.pages.sitemap', compact('categories', 'products', 'pages'))
