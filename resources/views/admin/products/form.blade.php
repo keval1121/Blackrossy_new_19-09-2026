@@ -13,7 +13,7 @@
         <div class="space-y-6 lg:col-span-2">
             <section class="admin-card">
                 <h2 class="admin-card-title">Basic info</h2>
-                <p class="admin-card-help">Name, SKU and descriptions shown on the storefront.</p>
+                <p class="admin-card-help">Name, SKU and description shown on the storefront.</p>
                 <div class="mt-4 space-y-3">
                     <div>
                         <label class="admin-label">Product name</label>
@@ -30,11 +30,7 @@
                         </div>
                     </div>
                     <div>
-                        <label class="admin-label">Short description</label>
-                        <textarea class="admin-input min-h-20" name="short_description">{{ old('short_description', $product->short_description ?? '') }}</textarea>
-                    </div>
-                    <div>
-                        <label class="admin-label">Full description</label>
+                        <label class="admin-label">Description</label>
                         <textarea class="admin-input min-h-40" name="description">{{ old('description', $product->description ?? '') }}</textarea>
                     </div>
                     <div>
@@ -57,16 +53,27 @@
             </section>
 
             @php
+                $defaultSizeVariants = [
+                    ['label' => 'Size: S', 'sku' => '001', 'stock' => '200'],
+                    ['label' => 'Size: M', 'sku' => '002', 'stock' => '200'],
+                    ['label' => 'Size: L', 'sku' => '003', 'stock' => '200'],
+                    ['label' => 'Size: XL', 'sku' => '004', 'stock' => '200'],
+                    ['label' => 'Size: XXL', 'sku' => '005', 'stock' => '200'],
+                ];
                 $variantRows = old('variants');
                 if ($variantRows === null) {
-                    $variantRows = ($product->variants ?? collect())->values()->map(fn ($variant) => [
-                        'id' => $variant->id,
-                        'label' => $variant->values->map(fn ($v) => $v->attribute->name.': '.$v->attributeValue->value)->implode(', '),
-                        'sku' => $variant->sku,
-                        'stock' => $variant->stock,
-                    ])->all();
-                    if ($variantRows === []) {
-                        $variantRows = [['label' => '', 'sku' => '', 'stock' => '']];
+                    if (isset($product)) {
+                        $variantRows = $product->variants->values()->map(fn ($variant) => [
+                            'id' => $variant->id,
+                            'label' => $variant->values->map(fn ($v) => $v->attribute->name.': '.$v->attributeValue->value)->implode(', '),
+                            'sku' => $variant->sku,
+                            'stock' => $variant->stock,
+                        ])->all();
+                        if ($variantRows === []) {
+                            $variantRows = $defaultSizeVariants;
+                        }
+                    } else {
+                        $variantRows = $defaultSizeVariants;
                     }
                 }
             @endphp
@@ -74,7 +81,7 @@
                 <div class="flex flex-wrap items-start justify-between gap-3">
                     <div>
                         <h2 class="admin-card-title">Variants</h2>
-                        <p class="admin-card-help">One row per size/color. Example label: <code class="rounded bg-stone-100 px-1">Size:M</code> or <code class="rounded bg-stone-100 px-1">Size:M, Color:Black</code></p>
+                        <p class="admin-card-help">Default sizes S–XXL are prefilled — edit SKU/stock or add colors as needed. Example: <code class="rounded bg-stone-100 px-1">Size: M, Color: Black</code></p>
                     </div>
                     <button type="button" id="add-variant-row" class="admin-btn admin-btn-ghost shrink-0 text-sm">+ Add variant</button>
                 </div>
