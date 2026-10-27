@@ -32,3 +32,10 @@
 
 
 
+
+
+.product-detail{display:grid;gap:1.5rem}
+@media (min-width:768px){.product-detail{grid-template-columns:repeat(2,minmax(0,1fr));gap:2.5rem}}
+.product-detail-gallery,.product-detail-info{min-width:0}
+@media (max-width:767px){.product-gallery-image{min-height:20rem!important}.product-detail-info h1{margin-top:.15rem}}
+.product-gallery-thumbs{display:none!important}

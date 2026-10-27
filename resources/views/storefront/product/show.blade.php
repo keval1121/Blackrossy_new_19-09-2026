@@ -26,8 +26,8 @@
 @endphp
 
 @section('content')
-<div class="container-store py-6 md:grid md:grid-cols-2 md:gap-10">
-    <div>
+<div class="container-store product-detail grid gap-6 py-6 md:grid-cols-2 md:gap-10">
+    <div class="product-detail-gallery">
         @php
             $galleryImages = $product->images->values();
             $galleryMain = $product->displayImage();
@@ -59,26 +59,11 @@
                     </button>
                 @endif
             </div>
-            @if(count($galleryUrls) > 1)
-                <div class="product-gallery-thumbs" role="list">
-                    @foreach($galleryImages as $index => $image)
-                        <button
-                            type="button"
-                            class="product-gallery-thumb {{ $index === $galleryStart ? 'is-active' : '' }}"
-                            data-gallery-thumb
-                            data-index="{{ $index }}"
-                            aria-label="View image {{ $index + 1 }}"
-                        >
-                            <img src="{{ $image->url('thumb') }}" alt="" class="h-full w-full object-cover" loading="lazy">
-                        </button>
-                    @endforeach
-                </div>
-            @endif
             <script type="application/json" data-gallery-sources>{!! json_encode($galleryUrls, JSON_UNESCAPED_SLASHES) !!}</script>
         </div>
     </div>
-    <div>
-        <h1 class="font-serif text-4xl md:text-5xl">{{ $product->name }}</h1>
+    <div class="product-detail-info">
+        <h1 class="font-serif text-3xl leading-tight md:text-5xl">{{ $product->name }}</h1>
         <div class="mt-4 flex items-end gap-3">
             <p id="price" class="text-3xl font-semibold">{{ money($product->selling_price) }}</p>
             <p id="mrp" class="price-mrp">{{ money($product->mrp) }}</p>
@@ -159,7 +144,6 @@
     document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {
         const sourcesNode = gallery.querySelector('[data-gallery-sources]');
         const image = gallery.querySelector('[data-gallery-image]');
-        const thumbs = [...gallery.querySelectorAll('[data-gallery-thumb]')];
         const sources = sourcesNode ? JSON.parse(sourcesNode.textContent || '[]') : [];
         if (!image || sources.length < 2) {
             return;
@@ -173,16 +157,10 @@
         const show = (nextIndex) => {
             index = (nextIndex + sources.length) % sources.length;
             image.src = sources[index];
-            thumbs.forEach((thumb, thumbIndex) => {
-                thumb.classList.toggle('is-active', thumbIndex === index);
-            });
         };
 
         gallery.querySelector('[data-gallery-prev]')?.addEventListener('click', () => show(index - 1));
         gallery.querySelector('[data-gallery-next]')?.addEventListener('click', () => show(index + 1));
-        thumbs.forEach((thumb) => {
-            thumb.addEventListener('click', () => show(Number(thumb.dataset.index || 0)));
-        });
     });
 
     const variants = @json($variantMap);
