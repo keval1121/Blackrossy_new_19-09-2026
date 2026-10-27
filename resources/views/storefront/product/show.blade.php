@@ -78,12 +78,7 @@
         </div>
     </div>
     <div>
-        <nav class="text-xs text-muted">
-            <a href="{{ route('home') }}">Home</a> /
-            <a href="{{ $product->category->url() }}">{{ $product->category->name }}</a>
-            @if($product->subCategory) / <a href="{{ $product->subCategory->url() }}">{{ $product->subCategory->name }}</a> @endif
-        </nav>
-        <h1 class="mt-3 font-serif text-4xl md:text-5xl">{{ $product->name }}</h1>
+        <h1 class="font-serif text-4xl md:text-5xl">{{ $product->name }}</h1>
         <div class="mt-4 flex items-end gap-3">
             <p id="price" class="text-3xl font-semibold">{{ money($product->selling_price) }}</p>
             <p id="mrp" class="price-mrp">{{ money($product->mrp) }}</p>

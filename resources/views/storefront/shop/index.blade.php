@@ -12,12 +12,6 @@
 
 @section('content')
 <div class="container-store py-4 md:py-8">
-    <nav class="mb-2 text-xs text-muted">
-        <a href="{{ route('home') }}">Home</a>
-        @if($category) / <a href="{{ $category->url() }}">{{ $category->name }}</a> @endif
-        @if($subcategory) / {{ $subcategory->name }} @endif
-    </nav>
-
     <div class="mb-4">
         <h1 class="font-serif text-3xl md:text-4xl">{{ $heading }}</h1>
         @if($listingCategory?->description)
