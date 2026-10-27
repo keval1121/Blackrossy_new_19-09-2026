@@ -13,7 +13,7 @@ class AdminProductFormDefaultsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_create_form_prefills_default_size_variants_and_hides_short_description(): void
+    public function test_create_form_prefills_default_size_variants_and_shows_short_description(): void
     {
         $admin = Admin::query()->create([
             'name' => 'Admin',
@@ -25,7 +25,8 @@ class AdminProductFormDefaultsTest extends TestCase
         $response = $this->actingAs($admin, 'admin')->get(route('admin.products.create'));
 
         $response->assertOk();
-        $response->assertDontSee('Short description', false);
+        $response->assertSee('Short description', false);
+        $response->assertSee('name="short_description"', false);
         $response->assertSee('name="variants[0][label]"', false);
         $response->assertSee('value="Size: S"', false);
         $response->assertSee('value="Size: XXL"', false);
@@ -34,19 +35,19 @@ class AdminProductFormDefaultsTest extends TestCase
         $response->assertSee('value="200"', false);
     }
 
-    public function test_storefront_product_page_does_not_show_short_description(): void
+    public function test_storefront_product_page_shows_short_description(): void
     {
         $category = Category::query()->create([
             'name' => 'Apparel',
-            'slug' => 'apparel-no-short',
+            'slug' => 'apparel-with-short',
             'is_active' => true,
         ]);
 
         $product = Product::query()->create([
             'category_id' => $category->id,
-            'name' => 'No Short Shirt',
-            'slug' => 'no-short-shirt',
-            'short_description' => 'HIDDEN_SHORT_COPY',
+            'name' => 'Short Copy Shirt',
+            'slug' => 'short-copy-shirt',
+            'short_description' => 'VISIBLE_SHORT_COPY next to the image.',
             'description' => 'Full product description for shoppers and SEO.',
             'mrp' => 999,
             'selling_price' => 499,
@@ -57,7 +58,7 @@ class AdminProductFormDefaultsTest extends TestCase
         $response = $this->get(route('product.show', $product));
 
         $response->assertOk();
-        $response->assertDontSee('HIDDEN_SHORT_COPY');
+        $response->assertSee('VISIBLE_SHORT_COPY next to the image.');
         $response->assertSee('Full product description for shoppers and SEO.');
     }
 }

@@ -13,7 +13,7 @@
         <div class="space-y-6 lg:col-span-2">
             <section class="admin-card">
                 <h2 class="admin-card-title">Basic info</h2>
-                <p class="admin-card-help">Name, SKU and description shown on the storefront.</p>
+                <p class="admin-card-help">Name, SKU and descriptions shown on the storefront.</p>
                 <div class="mt-4 space-y-3">
                     <div>
                         <label class="admin-label">Product name</label>
@@ -30,7 +30,11 @@
                         </div>
                     </div>
                     <div>
-                        <label class="admin-label">Description</label>
+                        <label class="admin-label">Short description</label>
+                        <textarea class="admin-input min-h-20" name="short_description" placeholder="Shown next to the product image">{{ old('short_description', $product->short_description ?? '') }}</textarea>
+                    </div>
+                    <div>
+                        <label class="admin-label">Full description</label>
                         <textarea class="admin-input min-h-40" name="description">{{ old('description', $product->description ?? '') }}</textarea>
                     </div>
                     <div>

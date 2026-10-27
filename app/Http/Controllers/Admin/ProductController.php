@@ -182,7 +182,7 @@ class ProductController extends Controller
                     $product->category?->name,
                     $product->subCategory?->name,
                     $product->sku,
-                    Str::limit(strip_tags((string) $product->description), 200),
+                    $product->short_description,
                     $product->mrp,
                     $product->selling_price,
                     $product->stock_quantity,
@@ -225,6 +225,7 @@ class ProductController extends Controller
             'sub_category_id' => ['nullable', 'exists:categories,id'],
             'brand_id' => ['nullable', 'exists:brands,id'],
             'sku' => ['nullable', 'string', 'max:80', Rule::unique('products', 'sku')->ignore($product?->id)],
+            'short_description' => ['nullable', 'string', 'max:500'],
             'description' => ['nullable', 'string'],
             'mrp' => ['required', 'numeric', 'min:1'],
             'selling_price' => ['required', 'numeric', 'min:1'],
@@ -249,7 +250,6 @@ class ProductController extends Controller
         ]);
 
         $data['slug'] = ($data['slug'] ?? '') ?: Str::slug($data['name']);
-        $data['short_description'] = null;
         $data['min_order_qty'] = (int) ($data['min_order_qty'] ?? 1);
         if ($data['min_order_qty'] < 1) {
             $data['min_order_qty'] = 1;

@@ -3,7 +3,8 @@
 @php
     $seoTitle = $product->seo_title ?: $product->name.' | '.store_name();
     $seoDescription = $product->seo_description
-        ?: \Illuminate\Support\Str::limit(strip_tags((string) $product->description), 160);
+        ?: ($product->short_description
+            ?: \Illuminate\Support\Str::limit(strip_tags((string) $product->description), 160));
     $ogImage = $product->displayImage()?->url('large');
     $ogType = 'product';
     $schema = json_encode([
@@ -11,7 +12,7 @@
         '@type' => 'Product',
         'name' => $product->name,
         'image' => $product->images->map->url('large')->all(),
-        'description' => \Illuminate\Support\Str::limit(strip_tags((string) $product->description), 300),
+        'description' => strip_tags((string) ($product->short_description ?: $product->description)),
         'sku' => $product->sku,
         'brand' => $product->brand?->name,
         'offers' => [
@@ -91,6 +92,9 @@
             @endif
         </div>
         <p id="stock-label" class="stock-label {{ $product->inStock() ? 'is-in' : 'is-out' }}">{{ $product->inStock() ? 'In stock' : 'Out of stock' }}</p>
+        @if(filled($product->short_description))
+            <p class="mt-4 text-sm leading-6 text-muted">{{ $product->short_description }}</p>
+        @endif
 
         <form data-ajax-cart action="{{ route('cart.add') }}" method="post" class="mt-6 space-y-5" id="buy-form">
             @csrf
