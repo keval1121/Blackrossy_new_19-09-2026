@@ -793,8 +793,15 @@ input:focus, select:focus, textarea:focus {
 .product-gallery-image {
     display: block;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 5;
+    min-height: 26rem;
     object-fit: cover;
+}
+
+@media (min-width: 768px) {
+    .product-gallery-image {
+        min-height: 32rem;
+    }
 }
 
 .product-gallery-nav {
