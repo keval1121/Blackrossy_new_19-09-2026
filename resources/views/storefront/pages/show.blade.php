@@ -40,7 +40,12 @@
         color: #57534e;
         font-size: 1rem;
         line-height: 1.85;
-        white-space: pre-line;
+    }
+    .br-legal-body p {
+        margin: 0 0 1.35rem;
+    }
+    .br-legal-body p:last-child {
+        margin-bottom: 0;
     }
 </style>
 @endpush
@@ -51,7 +56,13 @@
         <p class="br-legal-kicker">Black Rossy</p>
         <h1 class="br-legal-title">{{ $page->title }}</h1>
         <a class="br-legal-back" href="{{ route('policy') }}">← Back to Our Policies</a>
-        <div class="br-legal-body">{{ $page->content }}</div>
+        <div class="br-legal-body">
+            @foreach (preg_split("/\R\s*\R/u", trim((string) $page->content)) as $block)
+                @if (trim($block) !== '')
+                    <p>{!! nl2br(e(trim($block))) !!}</p>
+                @endif
+            @endforeach
+        </div>
     </div>
 </article>
 @endsection

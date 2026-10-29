@@ -16,7 +16,8 @@ class SyncStockedPolicyCopyCommand extends Command
     {
         $dry = (bool) $this->option('dry-run');
 
-        foreach ($this->pages() as $slug => $content) {
+        foreach ($this->pages() as $slug => $raw) {
+            $content = $this->withSectionSpacing($raw);
             $page = Page::query()->where('slug', $slug)->first();
             if ($page === null) {
                 $this->warn("Missing CMS page: {$slug}");
@@ -41,6 +42,18 @@ class SyncStockedPolicyCopyCommand extends Command
         $this->info($dry ? 'Dry run complete.' : 'Stocked-policy CMS copy synced.');
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Insert a blank line before numbered headings so legal pages keep readable section gaps.
+     */
+    private function withSectionSpacing(string $content): string
+    {
+        $content = preg_replace('/\R(?=\d+\.\s)/u', "\n\n", $content) ?? $content;
+        $content = preg_replace('/\R(?=Related:)/u', "\n\n", $content) ?? $content;
+        $content = preg_replace("/\n{3,}/", "\n\n", $content) ?? $content;
+
+        return trim($content)."\n";
     }
 
     /**

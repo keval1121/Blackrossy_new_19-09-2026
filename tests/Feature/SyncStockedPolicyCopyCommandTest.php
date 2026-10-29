@@ -41,11 +41,19 @@ class SyncStockedPolicyCopyCommandTest extends TestCase
         $this->assertStringContainsString('selling clothing and bags', $terms);
         $this->assertStringNotContainsString('jewellery', strtolower($terms));
         $this->assertStringNotContainsString('footwear', strtolower($terms));
+        $this->assertMatchesRegularExpression("/footer\\.\n\n2\\. Eligibility/s", $terms);
 
         $this->assertStringContainsString('Clothing and bags', $returns);
         $this->assertStringNotContainsString('jewellery', strtolower($returns));
         $this->assertStringNotContainsString('footwear', strtolower($returns));
+        $this->assertMatchesRegularExpression("/delivery\\.\n\n2\\. Eligible/s", $returns);
 
         $this->assertStringNotContainsString('jewellery', strtolower($faq));
+
+        $response = $this->get('/terms');
+        $response->assertOk();
+        $response->assertSee('<p>', false);
+        $response->assertSee('1. About Black Rossy', false);
+        $response->assertSee('selling clothing and bags', false);
     }
 }
