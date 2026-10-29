@@ -177,19 +177,19 @@ TXT;
     private function expandAboutPage(bool $dry): void
     {
         $content = <<<'TXT'
-Black Rossy is an India-based online boutique for fashion clothing, footwear and bags. We built the store for shoppers who want honest product photos, practical descriptions and a checkout that does not force an account — with Cash on Delivery on eligible pin codes.
+Black Rossy is an India-based online boutique for clothing and bags. We built the store for shoppers who want honest product photos, practical descriptions and a checkout that does not force an account — with Cash on Delivery on eligible pin codes.
 
 Our story
 We started Black Rossy to make everyday and festive shopping simpler. Too many product pages show little more than a price and a stock photo. Here, each live listing aims to explain who the piece is for, when to wear it, and how to care for it, so you can decide with confidence from your phone.
 
 What we sell
-Our live collections focus on Rossy Apparel (clothing), Rossy Stride (footwear) and Rossy Carry (handbags and clutches). Category pages include buying guidance — not only a product grid — so you can learn how to choose before you filter by price. Jewellery, beauty, home and gift desks may appear when those assortments are stocked; until then we keep empty lines off the public menu so you only browse what you can buy.
+Our live collections focus on Rossy Apparel (clothing) and Rossy Carry (handbags and clutches). Category pages include buying guidance — not only a product grid — so you can learn how to choose before you filter by price. Empty lines stay off the public menu until they have products you can actually buy.
 
 How shopping works
 Browse a collection, open a product, add it to your cart, and checkout as a guest with your name, mobile number and delivery address. Shipping is free on every order. Packing usually takes 1–2 working days, with delivery often in 2–5 days depending on your pin code. Pay the courier only after the parcel reaches you on eligible COD routes.
 
 Policies and support
-Shipping, returns, refunds, cancellation, privacy and cookies are published as full pages on this website. Eligible unused returns follow a 7-day window when tags and packaging are intact — jewellery and a few personal items can have extra limits, explained on the Return Policy page. For order help, use Contact, email, phone or WhatsApp with your order number.
+Shipping, returns, refunds, cancellation, privacy and cookies are published as full pages on this website. Eligible unused returns follow a 7-day window when tags and packaging are intact — a few personal or hygiene-sensitive items can have extra limits, explained on the Return Policy page. For order help, use Contact, email, phone or WhatsApp with your order number.
 
 Why this matters
 We want Black Rossy to be useful even when you are only researching an outfit: clear navigation, readable policies, and product copy written for real Indian occasions. That is the standard we hold ourselves to as we grow the catalogue.
@@ -211,7 +211,7 @@ TXT;
         $page->update([
             'content' => $content,
             'seo_title' => 'About Us | Black Rossy',
-            'seo_description' => 'Learn about Black Rossy — an India COD boutique for clothing, footwear and bags with clear product guidance and guest checkout.',
+            'seo_description' => 'Learn about Black Rossy — an India COD boutique for clothing and bags with clear product guidance and guest checkout.',
             'is_active' => true,
         ]);
 

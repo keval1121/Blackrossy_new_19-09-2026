@@ -142,12 +142,25 @@
         <section class="br-about-block">
             <h2 class="br-about-heading">What we sell</h2>
             <p class="br-about-text">
-                Live collections centre on clothing, footwear and bags under {{ storefront_collection_names() }}. Category pages include buying guidance — not only a product grid — so you can learn how to choose before you filter by price. Empty lines stay off the public menu until they have products you can actually buy.
+                Live collections centre on {{ storefront_product_types() }} under {{ storefront_collection_names() }}. Category pages include buying guidance — not only a product grid — so you can learn how to choose before you filter by price. Empty lines stay off the public menu until they have products you can actually buy.
             </p>
             <ul class="br-about-list">
-                <li>Clothing for workdays, weekends and festive plans</li>
-                <li>Footwear chosen for everyday comfort and casual outings</li>
-                <li>Handbags and clutches for daily carry and occasion looks</li>
+                @php
+                    $sellLines = [
+                        'fashion' => 'Clothing for workdays, weekends and festive plans',
+                        'bags' => 'Handbags and clutches for daily carry and occasion looks',
+                        'footwear' => 'Footwear chosen for everyday comfort and casual outings',
+                        'jewellery' => 'Fashion jewellery for everyday outfits and festive layering',
+                        'beauty-products' => 'Beauty picks with clear photos when that desk is stocked',
+                        'home-products' => 'Home pieces chosen for everyday use',
+                        'gift-items' => 'Gift-ready picks for festivals and birthdays',
+                    ];
+                @endphp
+                @forelse(storefront_collections() as $collection)
+                    <li>{{ $sellLines[$collection['slug']] ?? ($collection['name'].' with clear photos and practical product guidance') }}</li>
+                @empty
+                    <li>Curated pieces with clear photos and practical product guidance</li>
+                @endforelse
             </ul>
         </section>
 

@@ -205,7 +205,7 @@ if (! function_exists('storefront_collection_names')) {
 
 if (! function_exists('storefront_product_types')) {
     /**
-     * e.g. "clothing, jewellery and bags" — plain words for descriptions and search hints.
+     * e.g. "clothing and bags" — plain words for descriptions and search hints (active stocked collections only).
      */
     function storefront_product_types(string $finalGlue = ' and '): string
     {

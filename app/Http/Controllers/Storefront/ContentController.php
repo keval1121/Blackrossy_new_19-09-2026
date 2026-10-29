@@ -108,8 +108,8 @@ class ContentController extends Controller
                         'answer' => 'We publish clear product photography and practical descriptions so you can judge colour, finish and scale. Phone screens can shift shades slightly; when unsure, compare similar items in the same collection or ask us on Contact before ordering.',
                     ],
                     [
-                        'question' => 'How should I choose size for clothing or footwear?',
-                        'answer' => 'Read the size or fit notes on each product page and use the photos as a guide. If you are between sizes, share your usual brand size with us on Contact or WhatsApp and we will help before you confirm the order.',
+                        'question' => 'How should I choose size for clothing or bags?',
+                        'answer' => 'Read the size, fit or dimension notes on each product page and use the photos as a guide. If you are between sizes, share your usual brand size with us on Contact or WhatsApp and we will help before you confirm the order.',
                     ],
                 ],
             ],
@@ -118,7 +118,7 @@ class ContentController extends Controller
                 'items' => [
                     [
                         'question' => 'How do returns work at Black Rossy?',
-                        'answer' => 'Eligible unused items may be returned within 7 days of delivery when tags and packaging are intact. Jewellery and a few personal items can have extra limits. Read the full rules on our <a href="'.$returnPolicyUrl.'">Return Policy</a> page.',
+                        'answer' => 'Eligible unused items may be returned within 7 days of delivery when tags and packaging are intact. A few personal or hygiene-sensitive items can have extra limits when listed. Read the full rules on our <a href="'.$returnPolicyUrl.'">Return Policy</a> page.',
                     ],
                     [
                         'question' => 'What if an item arrives damaged?',

@@ -143,7 +143,7 @@
             </p>
             <h3 class="br-policy-sub">1. Eligibility for returns</h3>
             <p class="br-policy-text">
-                Unused products with original tags and packaging may be returned within 7 days of delivery. Fashion jewellery and a few personal items can have extra limits. Used, washed, damaged or incomplete items are not eligible.
+                Unused products with original tags and packaging may be returned within 7 days of delivery. A few personal or hygiene-sensitive items can have extra limits when listed. Used, washed, damaged or incomplete items are not eligible.
             </p>
             <h3 class="br-policy-sub">2. How to start a return</h3>
             <p class="br-policy-text">

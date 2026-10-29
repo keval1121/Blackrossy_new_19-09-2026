@@ -33,8 +33,12 @@ class StorefrontCollectionCopyTest extends TestCase
         $hidden->assertOk();
         $hidden->assertSee('A curated boutique for Rossy Apparel and Carry.', false);
         $hidden->assertSee('Search clothing, bags...', false);
+        $hidden->assertSee('Live collections centre on clothing and bags', false);
+        $hidden->assertSee('Handbags and clutches for daily carry and occasion looks', false);
         $hidden->assertDontSee('Lustre');
         $hidden->assertDontSee('jewellery,');
+        $hidden->assertDontSee('Footwear chosen for everyday comfort');
+        $hidden->assertDontSee('Fashion jewellery for everyday outfits');
 
         $this->actingAs($admin, 'admin')
             ->patch(route('admin.categories.active', $jewellery), ['value' => 1])
