@@ -29,7 +29,19 @@
     @if ($adsenseClient = adsense_client_id())
         <meta name="google-adsense-account" content="{{ $adsenseClient }}">
     @endif
-    {{-- AdSense + Analytics scripts load only after cookie consent (see cookie-notice). --}}
+    @if ($adsenseClient && setting('adsense_enabled', false) && empty($hideAds))
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ $adsenseClient }}" crossorigin="anonymous"></script>
+    @endif
+    @if ($gaId = ga_measurement_id())
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '{{ $gaId }}');
+        </script>
+    @endif
 </head>
 <body class="bg-sand text-ink antialiased pb-24 md:pb-0">
     <div id="toast-wrap" class="toast-wrap"></div>
@@ -50,6 +62,5 @@
     @include('layouts.partials.footer')
     @include('layouts.partials.bottom-nav')
     @include('layouts.partials.search-modal')
-    @include('layouts.partials.cookie-notice')
 </body>
 </html>
