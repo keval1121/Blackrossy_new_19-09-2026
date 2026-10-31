@@ -40,6 +40,7 @@
             <textarea class="admin-input mt-1 min-h-20" name="ads_txt" placeholder="Leave blank unless Google gave a different line">{{ setting('ads_txt') }}</textarea>
         </label>
         <label class="block text-sm text-rose-700"><input type="checkbox" name="adsense_enabled" @checked(setting('adsense_enabled', false))> Show ads now (only after Ready — enables Auto ads script + manual placements)</label>
+        <p class="mt-2 text-xs leading-5 text-stone-500">For EU/UK visitors: also create and publish an <strong>European regulations</strong> message in AdSense → Privacy &amp; messaging (Consent / Do not consent). Site banner already asks Accept vs Essential only and loads ads only after Accept.</p>
     </div>
 
     <div class="rounded-2xl border border-stone-200 p-4 space-y-3">
